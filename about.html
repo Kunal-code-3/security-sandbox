@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About | Security Sandbox</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Security Sandbox
+
+</div>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="about.html" class="active">About</a></li>
+
+<li><a href="features.html">Features</a></li>
+
+<li><a href="quiz.html">Quiz</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<section class="about-hero">
+
+<div class="about-left">
+
+<h5>
+
+ABOUT OUR PLATFORM
+
+</h5>
+
+<h1>
+
+Building a <span>Safer Digital Future</span>
+
+</h1>
+
+<p>
+
+Security Sandbox is an AI-powered cyber awareness platform created to help students and employees understand phishing attacks, password security, safe browsing, and digital threats through interactive learning.
+
+</p>
+
+<a href="features.html" class="about-btn">
+
+Explore Features
+
+</a>
+
+</div>
+
+<div class="about-right">
+
+<i class="fa-solid fa-user-shield"></i>
+
+</div>
+
+</section>
+<!-- ===== WHY CHOOSE US ===== -->
+
+<section class="why-us">
+
+    <h2>Why Choose Security Sandbox?</h2>
+
+    <p class="section-text">
+        Our platform helps users learn cybersecurity through interactive,
+        AI-powered simulations and real-world security awareness activities.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>AI Powered</h3>
+            <p>Interactive AI-generated phishing simulations.</p>
+        </div>
+
+        <div class="card">
+            <h3>Threat Detection</h3>
+            <p>Learn to identify fake emails and cyber attacks.</p>
+        </div>
+
+        <div class="card">
+            <h3>Password Safety</h3>
+            <p>Create strong passwords using best practices.</p>
+        </div>
+
+        <div class="card">
+            <h3>Safe Browsing</h3>
+            <p>Understand secure browsing and online privacy.</p>
+        </div>
+
+        <div class="card">
+            <h3>Interactive Quiz</h3>
+            <p>Practice with real-world cybersecurity questions.</p>
+        </div>
+
+        <div class="card">
+            <h3>Future Ready</h3>
+            <p>Prepare yourself for modern cyber threats.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===== TEAM ===== -->
+
+<section class="team">
+
+<h2>Meet Our Team</h2>
+
+<div class="team-container">
+
+<div class="member">
+<h3>Project Lead</h3>
+<p>Repository Management & Security Architecture</p>
+</div>
+
+<div class="member">
+<h3>Frontend Developer</h3>
+<p>Cyber Threat Database & Research</p>
+</div>
+
+<div class="member">
+<h3>Backend Developer</h3>
+<p>Quiz Validation & Attack Analysis</p>
+</div>
+
+<div class="member">
+<h3>AI Integrator</h3>
+<p>AI Generated Phishing Simulations</p>
+</div>
+
+<div class="member">
+<h3>UI Developer</h3>
+<p>Modern Interface & User Experience</p>
+</div>
+
+</div>
+
+</section>
+
+<script>
+    const authKey = 'securitySandboxAuth';
+
+    function isAuthenticated() {
+        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    }
+
+    const pageName = window.location.pathname.split('/').pop();
+    const isAuthPage = pageName === 'auth.html';
+
+    if (!isAuthPage && !isAuthenticated()) {
+        window.location.replace('auth.html');
+    }
+</script>
+
+</body>
+
+</html>

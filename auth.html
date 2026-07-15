@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Security Sandbox</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            Security Sandbox
+        </div>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="auth.html" class="active">Sign In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="auth-page">
+    <div class="auth-card">
+       
+
+        <div class="auth-form active" id="signin-form">
+            <h2>Hello Sir, Welcome</h2>
+            <p>Access your security dashboard and continue learning.</p>
+
+            <form>
+                <label for="signin-email">Email</label>
+                <input id="signin-email" type="email" placeholder="you@example.com" required>
+
+                <label for="signin-password">Password</label>
+                <input id="signin-password" type="password" placeholder="Enter your password" required>
+                <div class="auth-actions">
+                    <button type="submit" class="auth-submit">Sign In</button>
+                    <button class="switch-btn" type="button" data-form="signup">Sign Up</button>
+                </div>
+            </form>
+
+        
+
+            <p class="auth-footer">
+                New here? <a href="#" class="toggle-link" data-form="signup">Create an account</a>
+            </p>
+        </div>
+
+        <div class="auth-form" id="signup-form">
+            <h2>Create Account</h2>
+            <p>Join Security Sandbox to start your cyber safety journey.</p>
+
+            <form>
+                <label for="signup-name">Full Name</label>
+                <input id="signup-name" type="text" placeholder="Your name" required>
+
+                <label for="signup-email">Email</label>
+                <input id="signup-email" type="email" placeholder="you@example.com" required>
+
+                <label for="signup-password">Password</label>
+                <input id="signup-password" type="password" placeholder="Create a password" required>
+                <div class="auth-actions">
+                    <button type="submit" class="auth-submit">Sign Up</button>
+                    <button class="switch-btn" type="button" data-form="signin">Sign In</button>
+                </div>
+            </form>
+
+           
+
+            <p class="auth-footer">
+                Already have an account? <a href="#" class="toggle-link" data-form="signin">Sign in</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<script>
+    const authKey = 'securitySandboxAuth';
+
+    function isAuthenticated() {
+        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    }
+
+    function setAuthenticated(value) {
+        const state = value ? 'true' : 'false';
+        sessionStorage.setItem(authKey, state);
+        localStorage.setItem(authKey, state);
+    }
+
+    const toggleButtons = document.querySelectorAll('.switch-btn, .toggle-link');
+    const authForms = document.querySelectorAll('.auth-form');
+    const authSubmissions = document.querySelectorAll('.auth-form form');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const target = button.getAttribute('data-form');
+
+            document.querySelectorAll('.switch-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-form') === target);
+            });
+
+            authForms.forEach(form => {
+                form.classList.toggle('active', form.id === `${target}-form`);
+            });
+        });
+    });
+
+    authSubmissions.forEach(form => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            setAuthenticated(true);
+            window.location.href = 'index.html';
+        });
+    });
+</script>
+
+</body>
+</html>

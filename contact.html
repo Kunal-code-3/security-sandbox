@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Security Sandbox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script>
+        const authKey = 'securitySandboxAuth';
+
+        function isAuthenticated() {
+            return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+        }
+
+        const pageName = window.location.pathname.split('/').pop();
+        const isAuthPage = pageName === 'auth.html';
+
+        if (!isAuthPage && !isAuthenticated()) {
+            window.location.replace('auth.html');
+        }
+    </script>
+</body>
+</html>

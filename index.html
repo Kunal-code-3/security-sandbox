@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Security Sandbox | Cyber Awareness Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+       <nav>
+
+    <div class="logo">
+
+        🛡 Security Sandbox
+
+    </div>
+
+    <ul>
+
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="about.html">About</a></li>
+
+        <li><a href="features.html">Features</a></li>
+
+        <li><a href="quiz.html">Quiz</a></li>
+
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="auth.html">Sign In</a></li>
+
+    </ul>
+
+</nav>
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Learn.<br>
+            Detect.<br>
+            <span>Stay Secure.</span>
+        </h1>
+
+        <p>
+            Interactive Cyber Security Awareness Platform that helps employees
+            recognize phishing attacks, understand cyber threats, and improve
+            digital security skills through AI-powered training.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="features.html" class="btn-primary">
+                Start Learning
+            </a>
+
+            <a href="quiz.html" class="btn-secondary">
+                Take Quiz
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-image">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2092/2092663.png"
+             alt="Cyber Security">
+
+    </div>
+
+</section>
+
+<section class="stats">
+    <div class="stat-box">
+        <h3>Interactive Training</h3>
+        <p>Learn phishing detection and cyber safety through hands-on lessons.</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>Real Threat Awareness</h3>
+        <p>Understand modern scams, malware, and password risks in simple steps.</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>Quick Quiz Practice</h3>
+        <p>Test your knowledge with short challenge questions and improve fast.</p>
+    </div>
+</section>
+
+<footer>
+
+        <p>
+
+            © 2026 Security Sandbox
+
+        </p>
+
+    </footer>
+
+<script>
+    const authKey = 'securitySandboxAuth';
+
+    function isAuthenticated() {
+        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    }
+
+    const pageName = window.location.pathname.split('/').pop();
+    const isAuthPage = pageName === 'auth.html';
+
+    if (!isAuthPage && !isAuthenticated()) {
+        window.location.replace('auth.html');
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Features | Security Sandbox</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Security Sandbox
+
+</div>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="features.html" class="active">Features</a></li>
+
+<li><a href="quiz.html">Quiz</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<section class="feature-hero">
+
+<h5>OUR FEATURES</h5>
+
+<h1>Everything You Need To <span>Stay Secure</span></h1>
+
+<p>
+
+Explore powerful cybersecurity tools designed to improve awareness,
+detect threats, and build safe online habits through interactive learning.
+
+</p>
+
+</section>
+<section class="feature-grid">
+
+<div class="feature-card">
+
+<i class="fa-solid fa-robot"></i>
+
+<h3>AI Phishing Simulator</h3>
+
+<p>
+
+Experience realistic phishing emails generated using AI technology.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-envelope-open-text"></i>
+
+<h3>Email Detection</h3>
+
+<p>
+
+Identify suspicious emails and avoid cyber attacks.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-lock"></i>
+
+<h3>Password Security</h3>
+
+<p>
+
+Create strong passwords using modern security techniques.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-circle-question"></i>
+
+<h3>Interactive Quiz</h3>
+
+<p>
+
+Practice cybersecurity through engaging quizzes.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-bug"></i>
+
+<h3>Threat Library</h3>
+
+<p>
+
+Learn about malware, ransomware and phishing attacks.
+
+</p>
+
+</div>
+
+<div class="feature-card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Progress Tracking</h3>
+
+<p>
+
+Monitor your cybersecurity learning journey.
+
+</p>
+
+</div>
+
+</section>
+<section class="cta">
+
+<h2>Ready To Test Your Cyber Skills?</h2>
+
+<a href="quiz.html" class="btn">Start Quiz</a>
+
+</section>
+
+<script>
+    const authKey = 'securitySandboxAuth';
+
+    function isAuthenticated() {
+        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    }
+
+    const pageName = window.location.pathname.split('/').pop();
+    const isAuthPage = pageName === 'auth.html';
+
+    if (!isAuthPage && !isAuthenticated()) {
+        window.location.replace('auth.html');
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz | Security Sandbox</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">
+<i class="fa-solid fa-shield-halved"></i>
+Security Sandbox
+</div>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="features.html">Features</a></li>
+
+<li><a href="quiz.html" class="active">Quiz</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+
+<section class="quiz-hero">
+
+<p class="quiz-tag">
+CYBER SECURITY CHALLENGE
+</p>
+
+<h1>
+
+Test Your
+
+<span>Cyber Security</span>
+
+<br>
+
+Knowledge
+
+</h1>
+
+<p class="quiz-desc">
+
+Answer real-world cybersecurity questions and discover
+how prepared you are against phishing attacks,
+malware, password threats and online scams.
+
+</p>
+
+<div class="quiz-info">
+
+<div class="info-box">
+
+<i class="fa-solid fa-circle-question"></i>
+
+<h3>20 Questions</h3>
+
+</div>
+
+<div class="info-box">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>5 Minutes</h3>
+
+</div>
+
+<div class="info-box">
+
+<i class="fa-solid fa-award"></i>
+
+<h3>Certificate</h3>
+
+</div>
+
+</div>
+
+<button class="start-btn">
+
+Start Quiz
+
+</button>
+
+</section>
+<section class="quiz-container" style="display:none;">
+
+<div class="quiz-card">
+
+<div class="quiz-top">
+
+<div class="question-number">
+Question <span id="qno">1</span> / 8
+</div>
+
+<div class="score">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div class="progress-bar">
+<div id="progress"></div>
+</div>
+
+<h2 id="question">
+Loading...
+</h2>
+
+<div id="answers">
+</div>
+
+<div id="explanationBox" class="explanation-box" style="display:none;"></div>
+
+<button id="nextBtn">
+Next →
+</button>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+<script>
+    const authKey = 'securitySandboxAuth';
+
+    function isAuthenticated() {
+        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    }
+
+    const pageName = window.location.pathname.split('/').pop();
+    const isAuthPage = pageName === 'auth.html';
+
+    if (!isAuthPage && !isAuthenticated()) {
+        window.location.replace('auth.html');
+    }
+</script>
+
+</body>
+
+</html>
