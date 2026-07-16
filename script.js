@@ -353,3 +353,37 @@ location.reload();
 };
 
 }
+window.addEventListener("scroll",()=>{
+
+    const winScroll=document.documentElement.scrollTop;
+
+    const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+
+    const scrolled=(winScroll/height)*100;
+
+    document.getElementById("progress-bar").style.width=scrolled+"%";
+
+});
+const reveals=document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+
+    reveals.forEach(item=>{
+
+        const windowHeight=window.innerHeight;
+
+        const top=item.getBoundingClientRect().top;
+
+        if(top<windowHeight-120){
+
+            item.classList.add("active");
+
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll",revealOnScroll);
+
+revealOnScroll();

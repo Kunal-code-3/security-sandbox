@@ -55,19 +55,23 @@ nav{
     padding:18px 0;
 
 }
-
 .logo{
-
-    font-size:28px;
-
+    font-size:27px;
     font-weight:700;
-
-    color:#00e5ff;
-
-    text-shadow:0 0 10px cyan;
-
+    color:#67e8f9;
+    letter-spacing:.6px;
+    cursor:pointer;
+    transition:all .35s ease;
+    user-select:none;
 }
 
+.logo:hover{
+    color:#ffffff;
+    transform:translateY(-2px);
+    text-shadow:
+        0 0 8px rgba(103,232,249,.45),
+        0 0 18px rgba(103,232,249,.20);
+}
 nav ul{
 
     display:flex;
@@ -77,23 +81,18 @@ nav ul{
     list-style:none;
 
 }
-
 nav ul li a{
-
-    color:white;
-
+    position:relative;
+    color:#d1d5db;
     text-decoration:none;
-
-    transition:.3s;
-
     font-weight:500;
-
+    font-size:15px;
+    transition:.3s;
+    padding:6px 2px;
 }
 
 nav ul li a:hover{
-
-    color:#00e5ff;
-
+    color:#67e8f9;
 }
 
 /* ================= HERO ================= */
@@ -131,6 +130,9 @@ nav ul li a:hover{
     font-weight:800;
 
     color:white;
+    animation:slideLeft 1s ease;
+opacity:0;
+animation-fill-mode:forwards;
 
 }
 
@@ -151,6 +153,10 @@ nav ul li a:hover{
     max-width:620px;
 
     line-height:1.8;
+    animation:fadeUp 1.2s ease;
+opacity:0;
+animation-delay:.3s;
+animation-fill-mode:forwards;
 
 }
 
@@ -213,6 +219,8 @@ nav ul li a:hover{
     max-width:100%;
 
     animation:float 4s ease-in-out infinite;
+    transition:.5s;
+cursor:pointer;
 
 }
 
@@ -696,6 +704,37 @@ transition:.4s;
 transform:scale(1.08);
 
 box-shadow:0 0 25px #43e6ff;
+
+}
+.feature-link{
+
+    text-decoration:none;
+
+    color:inherit;
+
+    display:block;
+
+}
+
+.open-lab{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    color:#00e5ff;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.feature-card:hover .open-lab{
+
+    transform:translateX(8px);
+
+    color:white;
 
 }
 /*========================
@@ -1314,4 +1353,80 @@ box-shadow:0 0 25px #b68cff;
     color:#8feaff;
     font-size:14px;
     text-align:center;
+}
+nav ul li a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0%;
+    height:2px;
+    border-radius:20px;
+    background:#67e8f9;
+    transition:.35s;
+}
+
+nav ul li a:hover::after{
+    width:100%;
+}
+@keyframes slideLeft{
+
+    from{
+        opacity:0;
+        transform:translateX(-60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+.hero-image img:hover{
+
+    transform:scale(1.06) rotate(-3deg);
+
+}
+/* ================= Scroll Progress ================= */
+
+#progress-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:4px;
+    background:linear-gradient(90deg,#00e5ff,#7c3aed);
+    z-index:9999;
+    transition:width .1s linear;
+}
+/* Scroll Reveal */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:all .8s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
 }
