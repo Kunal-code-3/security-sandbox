@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Simulator - Security Sandbox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Security Sandbox</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="ai-sim-main">
+    <h1>AI Simulator</h1>
+    <div class="ai-controls">
+      <label>Topic
+        <select id="ai-topic">
+          <option value="phishing">Phishing</option>
+          <option value="password security">Password Security</option>
+          <option value="malware">Malware</option>
+        </select>
+      </label>
+
+      <label>Difficulty
+        <select id="ai-difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </label>
+
+      <label>Count
+        <input id="ai-count" type="number" min="1" max="5" value="1">
+      </label>
+
+      <button id="generate-ai">Generate Question(s)</button>
+      <button id="regenerate-ai" disabled>Regenerate</button>
+    </div>
+
+    <section id="ai-questions" class="ai-questions"></section>
+  </main>
+
+  <script src="ai-quiz.js"></script>
+</body>
+</html>
