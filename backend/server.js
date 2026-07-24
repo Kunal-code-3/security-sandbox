@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const db = require('./db');
 
 const app = express();
 app.use(cors());
@@ -23,8 +24,8 @@ app.use('/api/', limiter);
 // Block .env from being served
 app.use('/.env', (req, res) => res.status(403).json({ error: 'Forbidden' }));
 
-// Serve static files from project root
-app.use(express.static(path.join(__dirname)));
+// Serve static files from frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Simple in-memory usage counters (not persistent across restarts)
 const usage = { totalRequests: 0, byProvider: {} };
@@ -270,7 +271,14 @@ function generateMockQuestions(topic, difficulty, count) {
   return { questions: samples };
 }
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  // Initialize database
+  try {
+    await db.initDb();
+  } catch (err) {
+    console.error('Failed to initialize database:', err.message);
+  }
+
   console.log(`\n🛡  Security Sandbox server running on http://localhost:${PORT}`);
   console.log(`   AI Simulator: http://localhost:${PORT}/ai-simulator.html`);
   const gk = process.env.GOOGLE_API_KEY;
