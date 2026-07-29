@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const { execFile } = require('child_process');
 const db = require('./db');
 
 const app = express();
@@ -221,6 +222,35 @@ app.get('/api/status', (req, res) => {
       openai: openaiKey ? 'configured' : 'not configured'
     },
     usage
+  });
+});
+
+// ML Email Spam Detection Endpoint
+app.post('/api/email-detection', (req, res) => {
+  const emailText = req.body.emailText || req.body.text || '';
+  if (!emailText.trim()) {
+    return res.status(400).json({ error: 'Email text is required.' });
+  }
+
+  const scriptPath = path.join(__dirname, 'predict.py');
+  const payload = JSON.stringify({ text: emailText });
+
+  execFile('python', [scriptPath, payload], { cwd: __dirname }, (error, stdout, stderr) => {
+    if (error && !stdout) {
+      console.error('Email detection script error:', error, stderr);
+      return res.status(500).json({ error: 'Failed to analyze email', detail: stderr || error.message });
+    }
+
+    try {
+      const result = JSON.parse(stdout.trim());
+      if (result.error) {
+        return res.status(500).json({ error: result.error });
+      }
+      res.json(result);
+    } catch (parseErr) {
+      console.error('Invalid output from predict.py:', stdout, parseErr);
+      res.status(500).json({ error: 'Invalid output format from prediction model' });
+    }
   });
 });
 

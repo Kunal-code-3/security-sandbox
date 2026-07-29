@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Detection Lab | Security Sandbox</title>
+    <meta name="description" content="AI & ML powered email spam and phishing detection laboratory. Analyze suspicious emails in real-time.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="password-lab.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        .email-hero {
+            padding: 130px 8% 40px;
+            text-align: center;
+        }
+
+        .email-hero .tag {
+            color: #43e6ff;
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .email-hero h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .email-hero h1 span {
+            background: linear-gradient(90deg, #43e6ff, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .email-hero p {
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 25px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .ml-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(67, 230, 255, 0.1);
+            border: 1px solid rgba(67, 230, 255, 0.3);
+            color: #43e6ff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .detector-container {
+            max-width: 950px;
+            margin: 0 auto 80px;
+            padding: 0 5%;
+        }
+
+        .detector-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 35px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .preset-title {
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preset-btn:hover {
+            background: rgba(67, 230, 255, 0.15);
+            border-color: #43e6ff;
+            color: #43e6ff;
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .email-textarea {
+            width: 100%;
+            height: 180px;
+            background: rgba(2, 6, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px;
+            color: #f8fafc;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .email-textarea:focus {
+            outline: none;
+            border-color: #43e6ff;
+            box-shadow: 0 0 15px rgba(67, 230, 255, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-analyze {
+            flex: 2;
+            background: linear-gradient(135deg, #0284c7, #3b82f6);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #0369a1, #2563eb);
+        }
+
+        .btn-clear {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+        }
+
+        /* Result Section */
+        .result-box {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-box.spam {
+            background: rgba(220, 38, 38, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .result-box.safe {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .result-box.spam .status-badge { color: #f87171; }
+        .result-box.safe .status-badge { color: #34d399; }
+
+        .analysis-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .analysis-details { grid-template-columns: 1fr; }
+        }
+
+        .info-card {
+            background: rgba(2, 6, 23, 0.5);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .info-card h4 {
+            color: #cbd5e1;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .token-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .token-tag {
+            background: rgba(67, 230, 255, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .advice-list li {
+            color: #e2e8f0;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                Security Sandbox
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="email-detection.html" class="active">Email Lab</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="email-hero">
+        <p class="tag">MACHINE LEARNING SECURITY LAB</p>
+        <h1>Email Spam & <span>Phishing Detection</span></h1>
+        <p>
+            Paste any email content below to inspect it using our NLTK-driven Naive Bayes machine learning classifier.
+            Discover how natural language processing analyzes suspicious phrasing.
+        </p>
+        <div class="ml-badge">
+            <i class="fa-solid fa-brain"></i>
+            <span>Model: MultinomialNB + TF-IDF Vectorizer</span>
+        </div>
+    </section>
+
+    <!-- Detector Lab Card -->
+    <section class="detector-container">
+        <div class="detector-card">
+            
+            <!-- Quick Presets -->
+            <div class="preset-title">
+                <i class="fa-solid fa-bolt"></i> Quick Sample Emails (Click to test):
+            </div>
+            <div class="presets-row">
+                <button class="preset-btn" onclick="loadSample('spam1')">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Bank Account Locked (Spam)
+                </button>
+                <button class="preset-btn" onclick="loadSample('spam2')">
+                    <i class="fa-solid fa-gift"></i> Lottery Winner $1,000,000 (Spam)
+                </button>
+                <button class="preset-btn" onclick="loadSample('safe1')">
+                    <i class="fa-solid fa-check"></i> Project Meeting Sync (Safe)
+                </button>
+                <button class="preset-btn" onclick="loadSample('safe2')">
+                    <i class="fa-solid fa-envelope-open"></i> Weekly Security Newsletter (Safe)
+                </button>
+            </div>
+
+            <!-- Input Form -->
+            <div class="input-group">
+                <label for="email-input"><i class="fa-solid fa-envelope"></i> Email Content / Message Body:</label>
+                <textarea id="email-input" class="email-textarea" placeholder="Paste suspicious email text, headers, or links here..."></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <button id="analyze-btn" class="btn-analyze" onclick="analyzeEmail()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Analyze Email
+                </button>
+                <button class="btn-clear" onclick="clearInput()">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+            </div>
+
+            <!-- Result Box -->
+            <div id="result-box" class="result-box">
+                <div class="result-header">
+                    <div id="status-badge" class="status-badge">
+                        <i id="status-icon" class="fa-solid"></i>
+                        <span id="status-text">Scanning...</span>
+                    </div>
+                </div>
+
+                <div class="analysis-details">
+                    <!-- Preprocessing Info -->
+                    <div class="info-card">
+                        <h4><i class="fa-solid fa-code-compare"></i> NLTK Stemmed Tokens</h4>
+                        <div id="tokens-container" class="token-tags">
+                            <span class="token-tag">preprocessing...</span>
+                        </div>
+                    </div>
+
+                    <!-- Security Recommendations -->
+                    <div class="info-card">
+                        <h4><i class="fa-solid fa-shield-virus"></i> Security Guidance</h4>
+                        <ul id="advice-list" class="advice-list">
+                            <li>Analysis pending...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="email-detection.js"></script>
+</body>
+
+</html>
