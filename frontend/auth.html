@@ -34,13 +34,13 @@
 
 <section class="auth-page">
     <div class="auth-card">
-       
+        <div id="auth-message" class="auth-message"></div>
 
         <div class="auth-form active" id="signin-form">
             <h2>Hello Sir, Welcome</h2>
             <p>Access your security dashboard and continue learning.</p>
 
-            <form>
+            <form id="form-signin">
                 <label for="signin-email">Email</label>
                 <input id="signin-email" type="email" placeholder="you@example.com" required>
 
@@ -52,8 +52,6 @@
                 </div>
             </form>
 
-        
-
             <p class="auth-footer">
                 New here? <a href="#" class="toggle-link" data-form="signup">Create an account</a>
             </p>
@@ -63,7 +61,7 @@
             <h2>Create Account</h2>
             <p>Join Security Sandbox to start your cyber safety journey.</p>
 
-            <form>
+            <form id="form-signup">
                 <label for="signup-name">Full Name</label>
                 <input id="signup-name" type="text" placeholder="Your name" required>
 
@@ -78,8 +76,6 @@
                 </div>
             </form>
 
-           
-
             <p class="auth-footer">
                 Already have an account? <a href="#" class="toggle-link" data-form="signin">Sign in</a>
             </p>
@@ -89,24 +85,35 @@
 
 <script>
     const authKey = 'securitySandboxAuth';
+    const userKey = 'securitySandboxUser';
+    const msgBox = document.getElementById('auth-message');
 
-    function isAuthenticated() {
-        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
+    function showMessage(text, type = 'error') {
+        msgBox.textContent = text;
+        msgBox.className = `auth-message active ${type}`;
     }
 
-    function setAuthenticated(value) {
-        const state = value ? 'true' : 'false';
-        sessionStorage.setItem(authKey, state);
-        localStorage.setItem(authKey, state);
+    function clearMessage() {
+        msgBox.textContent = '';
+        msgBox.className = 'auth-message';
+    }
+
+    function setAuthenticated(user) {
+        sessionStorage.setItem(authKey, 'true');
+        localStorage.setItem(authKey, 'true');
+        if (user) {
+            sessionStorage.setItem(userKey, JSON.stringify(user));
+            localStorage.setItem(userKey, JSON.stringify(user));
+        }
     }
 
     const toggleButtons = document.querySelectorAll('.switch-btn, .toggle-link');
     const authForms = document.querySelectorAll('.auth-form');
-    const authSubmissions = document.querySelectorAll('.auth-form form');
 
     toggleButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault();
+            clearMessage();
             const target = button.getAttribute('data-form');
 
             document.querySelectorAll('.switch-btn').forEach(btn => {
@@ -119,14 +126,73 @@
         });
     });
 
-    authSubmissions.forEach(form => {
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            setAuthenticated(true);
-            window.location.href = 'index.html';
-        });
+    // Handle Sign In
+    document.getElementById('form-signin').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage();
+
+        const email = document.getElementById('signin-email').value.trim();
+        const password = document.getElementById('signin-password').value;
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                showMessage(data.error || 'Login failed', 'error');
+                return;
+            }
+
+            showMessage('Login successful! Redirecting...', 'success');
+            setAuthenticated(data.user);
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        } catch (err) {
+            console.error('Login error:', err);
+            showMessage('Unable to connect to authentication server.', 'error');
+        }
+    });
+
+    // Handle Sign Up
+    document.getElementById('form-signup').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage();
+
+        const name = document.getElementById('signup-name').value.trim();
+        const email = document.getElementById('signup-email').value.trim();
+        const password = document.getElementById('signup-password').value;
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                showMessage(data.error || 'Registration failed', 'error');
+                return;
+            }
+
+            showMessage('Account created successfully! Redirecting...', 'success');
+            setAuthenticated(data.user);
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        } catch (err) {
+            console.error('Registration error:', err);
+        }
     });
 </script>
 
+<script src="auth-state.js"></script>
 </body>
 </html>

@@ -24,6 +24,62 @@ app.use('/api/', limiter);
 // Block .env from being served
 app.use('/.env', (req, res) => res.status(403).json({ error: 'Forbidden' }));
 
+// ========================
+// DATABASE AUTHENTICATION ENDPOINTS
+// ========================
+
+// User Registration
+app.post('/api/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Name, email, and password are required.' });
+    }
+
+    const existingUser = await db.getUserByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ error: 'An account with this email already exists.' });
+    }
+
+    const userId = await db.createUser(name, email, password);
+    res.status(201).json({
+      message: 'Account created successfully!',
+      user: { id: userId, name, email }
+    });
+  } catch (err) {
+    console.error('Registration error:', err);
+    res.status(500).json({ error: 'Server error during registration.' });
+  }
+});
+
+// User Login
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required.' });
+    }
+
+    const user = await db.getUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+
+    const isMatch = await db.comparePassword(password, user.password_hash);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+
+    res.json({
+      message: 'Login successful!',
+      user: { id: user.id, name: user.name, email: user.email }
+    });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Server error during login.' });
+  }
+});
+
 // Explicit routes for email detection lab
 app.get(['/email-detection', '/email-detector', '/email-detection.html', '/email-detector.html'], (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/email-detection.html'));

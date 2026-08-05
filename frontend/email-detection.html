@@ -465,16 +465,8 @@
         <p>© 2026 Security Sandbox | Cyber Threat Awareness Platform</p>
     </footer>
 
+    <script src="auth-state.js"></script>
     <script>
-        // Auth Guard
-        const authKey = 'securitySandboxAuth';
-        function isAuthenticated() {
-            return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
-        }
-        if (!isAuthenticated()) {
-            window.location.replace('auth.html');
-        }
-
         // Backend Status Check
         async function checkBackendStatus() {
             const badge = document.getElementById('status-badge');

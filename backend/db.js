@@ -54,9 +54,15 @@ function getUserByEmail(email) {
     });
 }
 
+async function comparePassword(password, hash) {
+    return await bcrypt.compare(password, hash);
+}
+
 module.exports = {
     db,
     initDb,
     createUser,
-    getUserByEmail
+    getUserByEmail,
+    comparePassword
 };
+

@@ -169,21 +169,7 @@ Monitor your cybersecurity learning journey.
 
 </section>
 
-<script>
-    const authKey = 'securitySandboxAuth';
-
-    function isAuthenticated() {
-        return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
-    }
-
-    const pageName = window.location.pathname.split('/').pop();
-    const isAuthPage = pageName === 'auth.html';
-
-    if (!isAuthPage && !isAuthenticated()) {
-        window.location.replace('auth.html');
-    }
-</script>
-
+    <script src="auth-state.js"></script>
 </body>
 
 </html>

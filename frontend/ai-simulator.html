@@ -611,23 +611,8 @@
         <p>© 2026 Security Sandbox</p>
     </footer>
 
+    <script src="auth-state.js"></script>
     <script src="ai-quiz.js"></script>
-
-    <script>
-        const authKey = 'securitySandboxAuth';
-
-        function isAuthenticated() {
-            return sessionStorage.getItem(authKey) === 'true' || localStorage.getItem(authKey) === 'true';
-        }
-
-        const pageName = window.location.pathname.split('/').pop();
-        const isAuthPage = pageName === 'auth.html';
-
-        if (!isAuthPage && !isAuthenticated()) {
-            window.location.replace('auth.html');
-        }
-    </script>
-
 </body>
 
 </html>
