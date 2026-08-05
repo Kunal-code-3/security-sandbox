@@ -1,12 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Security Sandbox</title>
+    <meta name="description" content="Get in touch with the Security Sandbox team. Ask questions, report issues, or share feedback about our cybersecurity awareness platform.">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* ===== CONTACT PAGE ===== */
+        .contact-hero {
+            width: 90%;
+            margin: auto;
+            min-height: 38vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 130px 8% 50px;
+        }
+
+        .contact-hero h5 {
+            color: #43e6ff;
+            letter-spacing: 3px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        .contact-hero h1 {
+            font-size: 58px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        .contact-hero h1 span {
+            color: #43e6ff;
+            text-shadow: 0 0 20px rgba(67, 230, 255, 0.4);
+        }
+
+        .contact-hero p {
+            color: #cfcfcf;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 620px;
+        }
+
+        /* ===== INFO STRIP ===== */
+        .contact-info-strip {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 0 8% 60px;
+        }
+
+        .contact-info-card {
+            background: #171d2d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px 35px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 260px;
+            transition: 0.4s;
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(67, 230, 255, 0.25);
+            border-color: rgba(67, 230, 255, 0.3);
+        }
+
+        .contact-info-card i {
+            font-size: 38px;
+            color: #43e6ff;
+            margin-bottom: 16px;
+        }
+
+        .contact-info-card h3 {
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .contact-info-card p {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== FORM SECTION ===== */
+        .contact-section {
+            display: flex;
+            gap: 50px;
+            padding: 0 8% 100px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .contact-form-wrap {
+            flex: 1.4;
+            min-width: 300px;
+            background: #171d2d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 45px 40px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.25);
+        }
+
+        .contact-form-wrap h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .contact-form-wrap > p {
+            color: #9ca3af;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            color: #8feaff;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 13px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #0f1426;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #43e6ff;
+            box-shadow: 0 0 0 2px rgba(67, 230, 255, 0.15);
+        }
+
+        .form-group select option {
+            background: #0f1426;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .contact-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #43e6ff, #7b5cff);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 5px;
+        }
+
+        .contact-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(67, 230, 255, 0.35);
+        }
+
+        .contact-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== FORM MESSAGE ===== */
+        .form-message {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .form-message.active { display: block; }
+
+        .form-message.success {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .contact-sidebar {
+            flex: 0.9;
+            min-width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: #171d2d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 28px;
+            transition: 0.4s;
+        }
+
+        .sidebar-card:hover {
+            border-color: rgba(67, 230, 255, 0.2);
+            box-shadow: 0 0 20px rgba(67, 230, 255, 0.1);
+        }
+
+        .sidebar-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-card h3 i {
+            color: #43e6ff;
+            font-size: 18px;
+        }
+
+        .sidebar-card p, .sidebar-card li {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sidebar-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-card ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-card ul li i {
+            color: #43e6ff;
+            font-size: 12px;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #c7c7c7;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            border-color: #43e6ff;
+            color: #43e6ff;
+            background: rgba(67, 230, 255, 0.07);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero h1 { font-size: 38px; }
+            .form-row { flex-direction: column; }
+            .contact-section { flex-direction: column; }
+        }
+    </style>
 </head>
+
 <body>
-    <script src="auth-state.js"></script>
+
+<header>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            Security Sandbox
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="auth.html">Sign In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="contact-hero">
+    <h5>GET IN TOUCH</h5>
+    <h1>Contact <span>Security Sandbox</span></h1>
+    <p>Have a question, found a bug, or want to suggest a new feature? We'd love to hear from you.</p>
+</section>
+
+<!-- INFO STRIP -->
+<div class="contact-info-strip">
+    <div class="contact-info-card">
+        <i class="fa-solid fa-envelope"></i>
+        <h3>Email</h3>
+        <p><a href="mailto:kunalsingh653204@gmail.com">kunalsingh653204@gmail.com</a></p>
+    </div>
+    <div class="contact-info-card">
+        <i class="fa-solid fa-phone"></i>
+        <h3>Phone</h3>
+        <p>+91 8292547677</p>
+    </div>
+    <div class="contact-info-card">
+        <i class="fa-solid fa-clock"></i>
+        <h3>Response Time</h3>
+        <p>We aim to reply within 24–48 hours on weekdays.</p>
+    </div>
+    <div class="contact-info-card">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h3>Security Reports</h3>
+        <p>Found a vulnerability? Report it privately and responsibly.</p>
+    </div>
+</div>
+
+<!-- MAIN SECTION -->
+<div class="contact-section">
+
+    <!-- FORM -->
+    <div class="contact-form-wrap">
+        <h2>Send a Message</h2>
+        <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+
+        <div id="form-message" class="form-message"></div>
+
+        <form id="contact-form" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact-name">Full Name *</label>
+                    <input id="contact-name" type="text" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email Address *</label>
+                    <input id="contact-email" type="email" placeholder="you@example.com" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-subject">Subject *</label>
+                <select id="contact-subject" required>
+                    <option value="" disabled selected>Select a topic...</option>
+                    <option value="general">General Question</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="security">Security Vulnerability</option>
+                    <option value="feedback">Feedback / Suggestion</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-message">Message *</label>
+                <textarea id="contact-message" placeholder="Describe your question or feedback in detail..." required></textarea>
+            </div>
+
+            <button type="submit" class="contact-submit" id="contact-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i>&nbsp; Send Message
+                </button>
+                <img src="qr_placeholder.png" alt="QR Code" style="width:80px; margin-top:10px;"/>
+        </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="contact-sidebar">
+
+        <div class="sidebar-card">
+            <h3><i class="fa-solid fa-circle-question"></i> FAQ</h3>
+            <ul>
+                <li><i class="fa-solid fa-chevron-right"></i> Is Security Sandbox free to use?</li>
+                <li><i class="fa-solid fa-chevron-right"></i> How do I reset my password?</li>
+                <li><i class="fa-solid fa-chevron-right"></i> Can I use this for team training?</li>
+                <li><i class="fa-solid fa-chevron-right"></i> How does the AI quiz work?</li>
+            </ul>
+        </div>
+
+        <div class="sidebar-card">
+            <h3><i class="fa-solid fa-bug"></i> Reporting Bugs</h3>
+            <p>Please include steps to reproduce the issue, your browser version, and any error messages you see. Screenshots are very helpful!</p>
+        </div>
+        <div class="sidebar-card">
+            <h3><i class="fa-solid fa-envelope"></i> Get in Touch</h3>
+            <p>Feel free to reach out via phone or email for any inquiries.</p>
+        </div>
+
+        <div class="sidebar-card">
+            <h3><i class="fa-brands fa-github"></i> Follow the Project</h3>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/kunal-singh-cse" class="social-link"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i> Twitter</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Security Sandbox — Built for Cybersecurity Awareness</p>
+</footer>
+
+<script>
+    const form = document.getElementById('contact-form');
+    const msgBox = document.getElementById('form-message');
+    const submitBtn = document.getElementById('contact-submit-btn');
+
+    function showFormMessage(text, type) {
+        msgBox.textContent = text;
+        msgBox.className = `form-message active ${type}`;
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name    = document.getElementById('contact-name').value.trim();
+        const email   = document.getElementById('contact-email').value.trim();
+        const subject = document.getElementById('contact-subject').value;
+        const message = document.getElementById('contact-message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            showFormMessage('Please fill in all required fields.', 'error');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showFormMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        // Simulate sending
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp; Sending...';
+
+        setTimeout(() => {
+            showFormMessage(`✅ Message sent! Thanks, ${name}. We'll reply to ${email} within 24–48 hours.`, 'success');
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>&nbsp; Send Message';
+        }, 1500);
+    });
+</script>
+
+<script src="auth-state.js"></script>
 </body>
 </html>

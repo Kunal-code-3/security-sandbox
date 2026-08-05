@@ -20,6 +20,10 @@ const explanationBox = document.getElementById("explanationBox");
 let currentQuestion = 0;
 let score = 0;
 
+// Timer
+let timerInterval = null;
+let timeLeft = 300; // 5 minutes in seconds
+
 const quizData = [
 
 {
@@ -214,6 +218,7 @@ startBtn.addEventListener("click", () => {
     quizContainer.style.display = "flex";
 
     loadQuestion();
+    startTimer();
 
 });
 // ==========================
@@ -288,21 +293,67 @@ showResult();
 });
 
 // ==========================
+// TIMER
+// ==========================
+
+function startTimer() {
+    const display = document.getElementById('timer-display');
+    const timerEl = document.getElementById('quiz-timer');
+    timeLeft = 300;
+
+    timerInterval = setInterval(() => {
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        display.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+
+        timerEl.classList.remove('warning','danger');
+        if (timeLeft <= 30)       timerEl.classList.add('danger');
+        else if (timeLeft <= 60)  timerEl.classList.add('warning');
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showResult();
+        }
+        timeLeft--;
+    }, 1000);
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+// ==========================
 // RESULT
 // ==========================
 
 function showResult(){
 
+stopTimer();
+
 let message="";
+
+// Get logged-in user's first name if available
+let userName = '';
+try {
+    const userKey = 'securitySandboxUser';
+    const userStr = sessionStorage.getItem(userKey) || localStorage.getItem(userKey);
+    if (userStr) {
+        const user = JSON.parse(userStr);
+        if (user && user.name) userName = ' ' + user.name.split(' ')[0] + ',';
+    }
+} catch(e) {}
 
 if(score==quizData.length){
 
-message="🏆 Excellent, Utkarsh! You are a Cyber Security Master.";
+message=`🏆 Excellent${userName}! You are a Cyber Security Master.`;
 
 }
 else if(score>=6){
 
-message="🔥 Great Job, Utkarsh! Your cybersecurity knowledge is impressive.";
+message=`🔥 Great Job${userName}! Your cybersecurity knowledge is impressive.`;
 
 }
 else if(score>=4){
@@ -342,28 +393,87 @@ answers.innerHTML="";
 
 progress.style.width="100%";
 
-nextBtn.innerHTML="🔄 Restart Quiz";
+nextBtn.innerHTML="🏆 View Certificate";
 
 nextBtn.style.display="inline-block";
 
 nextBtn.onclick=()=>{
-
-location.reload();
-
+    showCertificate();
 };
 
 }
-window.addEventListener("scroll",()=>{
 
-    const winScroll=document.documentElement.scrollTop;
+// ==========================
+// CERTIFICATE
+// ==========================
 
-    const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+function showCertificate() {
+    // Get user name
+    let displayName = 'Cyber Learner';
+    try {
+        const userKey = 'securitySandboxUser';
+        const userStr = sessionStorage.getItem(userKey) || localStorage.getItem(userKey);
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            if (user && user.name) displayName = user.name;
+        }
+    } catch(e) {}
 
-    const scrolled=(winScroll/height)*100;
+    // Set certificate content
+    document.getElementById('cert-name').textContent  = displayName;
+    document.getElementById('cert-score').textContent = score;
+    document.getElementById('cert-total').textContent = ' / ' + quizData.length;
 
-    document.getElementById("progress-bar").style.width=scrolled+"%";
+    // Badge based on score
+    const badge = document.getElementById('cert-badge');
+    if (score === quizData.length) {
+        badge.textContent = '🥇 Perfect Score';
+        badge.style.cssText += 'background:rgba(250,204,21,0.15);border:1px solid rgba(250,204,21,0.5);color:#fbbf24;';
+    } else if (score >= 6) {
+        badge.textContent = '🥈 Advanced';
+        badge.style.cssText += 'background:rgba(156,163,175,0.15);border:1px solid rgba(156,163,175,0.5);color:#d1d5db;';
+    } else if (score >= 4) {
+        badge.textContent = '🥉 Intermediate';
+        badge.style.cssText += 'background:rgba(180,130,80,0.15);border:1px solid rgba(180,130,80,0.5);color:#cd7f32;';
+    } else {
+        badge.textContent = '📚 Keep Learning';
+        badge.style.cssText += 'background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.5);color:#a5b4fc;';
+    }
 
-});
+    // Date
+    const now = new Date();
+    document.getElementById('cert-date').textContent =
+        'Issued on ' + now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+    document.getElementById('certificate-modal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function printCertificate() {
+    window.print();
+}
+
+function restartQuiz() {
+    document.getElementById('certificate-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    location.reload();
+}
+
+// Only attach scroll progress-bar listener if the element exists (index.html only)
+const progressBarEl = document.getElementById("progress-bar");
+if (progressBarEl) {
+    window.addEventListener("scroll",()=>{
+
+        const winScroll=document.documentElement.scrollTop;
+
+        const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+
+        const scrolled=(winScroll/height)*100;
+
+        progressBarEl.style.width=scrolled+"%";
+
+    });
+}
 const reveals=document.querySelectorAll(".reveal");
 
 function revealOnScroll(){
