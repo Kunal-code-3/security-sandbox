@@ -490,7 +490,7 @@ app.post('/api/classify-email', async (req, res) => {
     let providerUsed = 'fastapi (http://localhost:8501)';
 
     if (!result) {
-      providerUsed = 'Security Sandbox ML Engine';
+      providerUsed = 'Cyber Guardian ML Engine';
       result = analyzeEmailLocally(emailText, sender, subject);
     }
 
@@ -565,7 +565,7 @@ app.listen(PORT, async () => {
     console.error('Failed to initialize database:', err.message);
   }
 
-  console.log(`\n🛡  Security Sandbox server running on http://localhost:${PORT}`);
+  console.log(`\n🛡  Cyber Guardian server running on http://localhost:${PORT}`);
   console.log(`   AI Simulator: http://localhost:${PORT}/ai-simulator.html`);
   const gk = process.env.GOOGLE_API_KEY;
   const ok = process.env.OPENAI_API_KEY;

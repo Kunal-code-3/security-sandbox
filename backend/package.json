@@ -1,5 +1,5 @@
 {
-  "name": "security-sandbox-ai",
+  "name": "cyber-guardian",
   "version": "1.0.0",
   "description": "Minimal proxy server for AI quiz integration",
   "main": "server.js",
