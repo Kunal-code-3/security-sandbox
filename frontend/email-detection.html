@@ -471,7 +471,7 @@
         async function checkBackendStatus() {
             const badge = document.getElementById('status-badge');
             try {
-                const res = await fetch('/api/status');
+                const res = await fetch('https://email-classifier-9q4n.onrender.com/api/status');
                 const data = await res.json();
                 if (data.providers && data.providers.fastapi) {
                     badge.className = 'status-badge fastapi';
@@ -530,7 +530,7 @@
             btn.innerHTML = `<span class="spinner"></span> Analyzing with ML Model...`;
 
             try {
-                const res = await fetch('/api/classify-email', {
+                const res = await fetch('https://email-classifier-9q4n.onrender.com/api/classify-email', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ emailText, sender, subject })
