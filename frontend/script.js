@@ -302,7 +302,7 @@ function startTimer() {
     timeLeft = 300;
 
     timerInterval = setInterval(async () => {
-        const res = await fetch('https://email-classifier-9q4n.onrender.com/api/status');
+        const res = await fetch('/api/status');
         const mins = Math.floor(timeLeft / 60);
         const secs = timeLeft % 60;
         display.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;

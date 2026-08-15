@@ -135,7 +135,7 @@
         const password = document.getElementById('signin-password').value;
 
         try {
-            const response = await fetch('https://email-classifier-9q4n.onrender.com/api/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },
@@ -174,7 +174,7 @@
             return;
         }
         try {
-            const response = await fetch('https://email-classifier-9q4n.onrender.com/api/register', {
+            const response = await fetch('/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },

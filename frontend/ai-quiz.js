@@ -27,7 +27,7 @@ let wrongCount = 0;
 // ========================
 async function checkProviderStatus() {
     try {
-        const res = await fetch('https://email-classifier-9q4n.onrender.com/api/status');
+        const res = await fetch('/api/status');
         const data = await res.json();
 
         const badge = providerBadge;
@@ -216,7 +216,7 @@ async function callGenerate(body) {
     generateBtn.classList.add('loading');
 
     try {
-        const res = await fetch('https://email-classifier-9q4n.onrender.com/api/generate-questions', {
+        const res = await fetch('/api/generate-questions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
