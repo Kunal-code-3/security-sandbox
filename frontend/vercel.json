@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://cyber-guardian-s1gn.onrender.com/api/:match*"
+    }
+  ]
+}
